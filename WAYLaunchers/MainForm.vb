@@ -21,6 +21,7 @@ Public Class MainForm
 
     Private Sub ProcessExited(sender As Object, e As EventArgs) Handles MyProcess.Exited
 
+        'TeensyPicNOR.Visible = True
         TabCommandsNOR.Enabled = True
         TabCommandsNAND.Enabled = True
         TabCommandsSPI.Enabled = True
@@ -48,6 +49,7 @@ Public Class MainForm
 
     Private Sub ProcessStart()
 
+        'TeensyPicNOR.Visible = False
         TabCommandsNOR.Enabled = False
         TabCommandsNAND.Enabled = False
         TabCommandsSPI.Enabled = False
@@ -87,15 +89,31 @@ Public Class MainForm
             proces.Kill()
         Next
 
+        Dim r As Process()
+        r = Process.GetProcessesByName("teensy_loader_cli")
+        For Each proces As Process In r
+            proces.Kill()
+        Next
 
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SaveToDisk("COMMANDS.BAT", "COMMANDS.BAT")
+        SaveToDisk("teensy_loader_cli.exe", "teensy_loader_cli.exe")
     End Sub
 
     Private Sub MainForm_Closed(sender As Object, e As EventArgs) Handles MyBase.FormClosed
         My.Computer.FileSystem.DeleteFile("COMMANDS.BAT")
+        My.Computer.FileSystem.DeleteFile("teensy_loader_cli.exe")
+    End Sub
+
+    'rac clavier *****************************************************************************************
+    Private Sub MainForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        'If e.KeyData = (Keys.Control Or Keys.F4) Then
+        '    do comething
+
+        'End If
+
     End Sub
 
     'Console Prompt Buttons*****************************************************************************************
@@ -113,7 +131,13 @@ Public Class MainForm
             proces.Kill()
         Next
 
-        CommandPrompt.AppendText(vbCrLf & vbCrLf & vbCrLf & "Process Killed!" & vbCrLf & "Reset Python needed using ""INFO"" command twice." & vbCrLf)
+        Dim q As Process()
+        q = Process.GetProcessesByName("teensy_loader_cli")
+        For Each proces As Process In q
+            proces.Kill()
+        Next
+
+        CommandPrompt.AppendText(vbCrLf & vbCrLf & vbCrLf & "Process Killed!" & vbCrLf)
 
     End Sub
 
@@ -138,7 +162,8 @@ Public Class MainForm
     'Onglet NORdump *****************************************************************************************
     Private Sub StartNORdumpButton_Click(sender As Object, e As EventArgs) Handles StartNORdumpButton.Click
 
-        Dim DumpFile As String = Replace(SaveToTextBoxNOR.Text, ".1.bin", "")
+        Dim DumpFileNOR As String = Replace(SaveToTextBoxNOR.Text, ".bin", "")
+        DumpFileNOR = Replace(DumpFileNOR, ".BIN", "")
 
         CommandPrompt.Text = ""
 
@@ -146,7 +171,7 @@ Public Class MainForm
         MyProcess.EnableRaisingEvents = True
         With MyProcess.StartInfo
             .FileName = "COMMANDS.BAT"
-            .Arguments = TabControl1.SelectedTab.Text & TabCommandsNOR.SelectedTab.Text & " " & Chr(34) & DumpFile & Chr(34) & " """" " & NumericUpDownDumpsNOR.Value & " " & CheckBoxBinCompNOR.Checked
+            .Arguments = TabControl1.SelectedTab.Text & TabCommandsNOR.SelectedTab.Text & " " & Chr(34) & DumpFileNOR & Chr(34) & " """" " & NumericUpDownDumpsNOR.Value & " " & CheckBoxBinCompNOR.Checked
             .UseShellExecute = False
             .CreateNoWindow = True
             .RedirectStandardInput = True
@@ -322,7 +347,8 @@ Public Class MainForm
     'Onglet NANDdump *****************************************************************************************
     Private Sub StartNANDdumpButton_Click(sender As Object, e As EventArgs) Handles StartNANDdumpButton.Click
 
-        Dim DumpFileNAND As String = Replace(SaveToTextBoxNAND.Text, ".1.bin", "")
+        Dim DumpFileNAND As String = Replace(SaveToTextBoxNOR.Text, ".bin", "")
+        DumpFileNAND = Replace(DumpFileNAND, ".BIN", "")
 
         CommandPrompt.Text = ""
 
@@ -484,7 +510,8 @@ Public Class MainForm
     'Onglet SPIdump *****************************************************************************************
     Private Sub StartSPIdumpButton_Click(sender As Object, e As EventArgs) Handles StartSPIdumpButton.Click
 
-        Dim DumpFileSPI As String = Replace(SaveToTextBoxSPI.Text, ".1.bin", "")
+        Dim DumpFileSPI As String = Replace(SaveToTextBoxNOR.Text, ".bin", "")
+        DumpFileSPI = Replace(DumpFileSPI, ".BIN", "")
 
         CommandPrompt.Text = ""
 
@@ -580,6 +607,84 @@ Public Class MainForm
         End With
         TeensyBlinkSPI.Visible = True
         ProcessStart()
+    End Sub
+
+    'load NORway.hex ********************************************************************************************
+    Private Sub TeensyPicNOR_Click(sender As Object, e As EventArgs) Handles TeensyPicNOR.Click
+
+        OpenHexNOR.ShowDialog()
+
+        If OpenHexNOR.FileName <> "" Then
+
+            CommandPrompt.Text = ""
+            MyProcess = New Process
+            MyProcess.EnableRaisingEvents = True
+            With MyProcess.StartInfo
+                .FileName = "COMMANDS.BAT"
+                .Arguments = "TeensyLoad" & " " & Chr(34) & OpenHexNOR.FileName & Chr(34)
+                .UseShellExecute = False
+                .CreateNoWindow = True
+                .RedirectStandardInput = True
+                .RedirectStandardOutput = True
+                .RedirectStandardError = True
+            End With
+            TeensyBlinkNOR.Visible = True
+            ProcessStart()
+
+        End If
+
+    End Sub
+
+    'load NANDway.hex ********************************************************************************************
+    Private Sub TeensyPicNAND_Click(sender As Object, e As EventArgs) Handles TeensyPicNAND.Click
+
+        OpenHexNAND.ShowDialog()
+
+        If OpenHexNAND.FileName <> "" Then
+
+            CommandPrompt.Text = ""
+            MyProcess = New Process
+            MyProcess.EnableRaisingEvents = True
+            With MyProcess.StartInfo
+                .FileName = "COMMANDS.BAT"
+                .Arguments = "TeensyLoad" & " " & Chr(34) & OpenHexNAND.FileName & Chr(34)
+                .UseShellExecute = False
+                .CreateNoWindow = True
+                .RedirectStandardInput = True
+                .RedirectStandardOutput = True
+                .RedirectStandardError = True
+            End With
+            TeensyBlinkNAND.Visible = True
+            ProcessStart()
+
+        End If
+
+    End Sub
+
+    'load SPIway.hex ********************************************************************************************
+    Private Sub TeensyPicSPI_Click(sender As Object, e As EventArgs) Handles TeensyPicSPI.Click
+
+        OpenHexSPI.ShowDialog()
+
+        If OpenHexSPI.FileName <> "" Then
+
+            CommandPrompt.Text = ""
+            MyProcess = New Process
+            MyProcess.EnableRaisingEvents = True
+            With MyProcess.StartInfo
+                .FileName = "COMMANDS.BAT"
+                .Arguments = "TeensyLoad" & " " & Chr(34) & OpenHexSPI.FileName & Chr(34)
+                .UseShellExecute = False
+                .CreateNoWindow = True
+                .RedirectStandardInput = True
+                .RedirectStandardOutput = True
+                .RedirectStandardError = True
+            End With
+            TeensyBlinkSPI.Visible = True
+            ProcessStart()
+
+        End If
+
     End Sub
 
 End Class

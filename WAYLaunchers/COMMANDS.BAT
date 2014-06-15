@@ -60,12 +60,29 @@ rem suite juste pour affichage sans guillemets
 for /f "useback tokens=*" %%a in ('%file_name%') do set light_file_name=%%~a
 rem 
 if %file_name% EQU "" goto erreurfichier
+if %nbr_dump% GTR 1 goto NORmultidump
+set dump_file_name=%file_name%.bin
+set view_file_name=%light_file_name%.bin
+echo.
+if not exist %myfiles%\norway.py goto warning_norwayfile
+echo Starting : NORway.py %teensy_port% DUMP "%view_file_name%"
+echo.
+echo -------------------------------------------------------------------------------
+%myfiles%\norway.py %teensy_port% dump %dump_file_name%
+echo -------------------------------------------------------------------------------
+echo.
+if %errorlevel% NEQ 0 goto erreur
+echo Dump saved as :
+echo "%view_file_name%"
+echo.
+goto end
+:NORmultidump
 set /a VAR=0
 :NORdmpretour 
 if %VAR%==%nbr_dump% goto NORdmpfin
 set /a VAR=VAR+1
-set dump_file_name=%file_name%.%VAR%.bin
-set view_file_name=%light_file_name%.%VAR%.bin
+set dump_file_name=%file_name%_%VAR%.bin
+set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\norway.py goto warning_norwayfile
 echo Starting : NORway.py %teensy_port% DUMP "%view_file_name%"
@@ -108,9 +125,9 @@ if %VAR%==%nbr_dump% goto NORchkloop
 set /a VAR=VAR+1
 echo Please wait...
 echo.
-fc /b %file_name%.%loop%.bin %file_name%.%VAR%.bin >> %file_path%\compare_log.txt
-if %errorlevel%==0 echo %light_file_name%.%loop%.bin same as %light_file_name%.%VAR%.bin
-if %errorlevel%==1 echo %light_file_name%.%loop%.bin different from %light_file_name%.%VAR%.bin
+fc /b %file_name%_%loop%.bin %file_name%_%VAR%.bin >> %file_path%\compare_log.txt
+if %errorlevel%==0 echo %light_file_name%_%loop%.bin same as %light_file_name%_%VAR%.bin
+if %errorlevel%==1 echo %light_file_name%_%loop%.bin different from %light_file_name%_%VAR%.bin
 if %errorlevel%==1 (set /a errorresult=%errorlevel%)
 if %errorlevel%==2 (set /a errorfile=%errorlevel%)
 goto NORchkretour
@@ -354,12 +371,29 @@ rem suite juste pour affichage sans guillemets
 for /f "useback tokens=*" %%a in ('%file_name%') do set light_file_name=%%~a
 rem 
 if %file_name% EQU "" goto erreurfichier
+if %nbr_dump% GTR 1 goto NANDmultidump
+set dump_file_name=%file_name%.bin
+set view_file_name=%light_file_name%.bin
+echo.
+if not exist %myfiles%\nandway.py goto warning_nandwayfile
+echo Starting : NANDway.py %teensy_port% 0 DUMP "%view_file_name%"
+echo.
+echo -------------------------------------------------------------------------------
+%myfiles%\nandway.py %teensy_port% 0 dump %dump_file_name%
+echo -------------------------------------------------------------------------------
+echo.
+if %errorlevel% NEQ 0 goto erreur
+echo Dump saved as :
+echo "%view_file_name%"
+echo.
+goto end
+:NANDmultidump
 set /a VAR=0
 :NANDdmpretour 
 if %VAR%==%nbr_dump% goto NANDdmpfin
 set /a VAR=VAR+1
-set dump_file_name=%file_name%.%VAR%.bin
-set view_file_name=%light_file_name%.%VAR%.bin
+set dump_file_name=%file_name%_%VAR%.bin
+set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\nandway.py goto warning_nandwayfile
 echo Starting : NANDway.py %teensy_port% 0 DUMP "%view_file_name%"
@@ -402,9 +436,9 @@ if %VAR%==%nbr_dump% goto NANDchkloop
 set /a VAR=VAR+1
 echo Please wait...
 echo.
-fc /b %file_name%.%loop%.bin %file_name%.%VAR%.bin >> %file_path%\compare_log.txt
-if %errorlevel%==0 echo %light_file_name%.%loop%.bin same as %light_file_name%.%VAR%.bin
-if %errorlevel%==1 echo %light_file_name%.%loop%.bin different from %light_file_name%.%VAR%.bin
+fc /b %file_name%_%loop%.bin %file_name%_%VAR%.bin >> %file_path%\compare_log.txt
+if %errorlevel%==0 echo %light_file_name%_%loop%.bin same as %light_file_name%_%VAR%.bin
+if %errorlevel%==1 echo %light_file_name%_%loop%.bin different from %light_file_name%_%VAR%.bin
 if %errorlevel%==1 (set /a errorresult=%errorlevel%)
 if %errorlevel%==2 (set /a errorfile=%errorlevel%)
 goto NANDchkretour
@@ -570,12 +604,29 @@ rem suite juste pour affichage sans guillemets
 for /f "useback tokens=*" %%a in ('%file_name%') do set light_file_name=%%~a
 rem 
 if %file_name% EQU "" goto erreurfichier
+if %nbr_dump% GTR 1 goto SPImultidump
+set dump_file_name=%file_name%.bin
+set view_file_name=%light_file_name%.bin
+echo.
+if not exist %myfiles%\spiway.py goto warning_spiwayfile
+echo Starting : SPIway.py %teensy_port% DUMP "%view_file_name%"
+echo.
+echo -------------------------------------------------------------------------------
+%myfiles%\spiway.py %teensy_port% dump %dump_file_name%
+echo -------------------------------------------------------------------------------
+echo.
+if %errorlevel% NEQ 0 goto erreur
+echo Dump saved as :
+echo "%view_file_name%"
+echo.
+goto end
+:SPImultidump
 set /a VAR=0
 :SPIdmpretour 
 if %VAR%==%nbr_dump% goto SPIdmpfin
 set /a VAR=VAR+1
-set dump_file_name=%file_name%.%VAR%.bin
-set view_file_name=%light_file_name%.%VAR%.bin
+set dump_file_name=%file_name%_%VAR%.bin
+set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\spiway.py goto warning_spiwayfile
 echo Starting : SPIway.py %teensy_port% DUMP "%view_file_name%"
@@ -618,9 +669,9 @@ if %VAR%==%nbr_dump% goto SPIchkloop
 set /a VAR=VAR+1
 echo Please wait...
 echo.
-fc /b %file_name%.%loop%.bin %file_name%.%VAR%.bin >> %file_path%\compare_log.txt
-if %errorlevel%==0 echo %light_file_name%.%loop%.bin same as %light_file_name%.%VAR%.bin
-if %errorlevel%==1 echo %light_file_name%.%loop%.bin different from %light_file_name%.%VAR%.bin
+fc /b %file_name%_%loop%.bin %file_name%_%VAR%.bin >> %file_path%\compare_log.txt
+if %errorlevel%==0 echo %light_file_name%_%loop%.bin same as %light_file_name%_%VAR%.bin
+if %errorlevel%==1 echo %light_file_name%_%loop%.bin different from %light_file_name%_%VAR%.bin
 if %errorlevel%==1 (set /a errorresult=%errorlevel%)
 if %errorlevel%==2 (set /a errorfile=%errorlevel%)
 goto SPIchkretour
@@ -695,6 +746,21 @@ echo ---------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
 goto end
+
+
+rem ------------- hex load to teensy -------------------------------------------------
+
+:TeensyLoad
+echo.
+echo Starting : teensy_loader_cli -mmcu=at90usb1286 -w -v %cmdfile1%
+echo.
+echo -------------------------------------------------------------------------------
+%myfiles%\teensy_loader_cli -mmcu=at90usb1286 -w -v %cmdfile1%
+echo -------------------------------------------------------------------------------
+echo.
+echo Done
+echo.
+goto %end%
 
 
 rem ------------- error codes ---------------------------------------------------------

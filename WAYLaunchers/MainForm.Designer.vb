@@ -22,6 +22,7 @@ Partial Class MainForm
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabNOR = New System.Windows.Forms.TabPage()
@@ -68,7 +69,7 @@ Partial Class MainForm
         Me.Label17 = New System.Windows.Forms.Label()
         Me.StartNORerasechipButton = New System.Windows.Forms.Button()
         Me.TeensyBlinkNOR = New System.Windows.Forms.PictureBox()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.TeensyPicNOR = New System.Windows.Forms.PictureBox()
         Me.TabNAND = New System.Windows.Forms.TabPage()
         Me.TabCommandsNAND = New System.Windows.Forms.TabControl()
         Me.TabNANDinfo = New System.Windows.Forms.TabPage()
@@ -107,7 +108,7 @@ Partial Class MainForm
         Me.Label12 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.TeensyBlinkNAND = New System.Windows.Forms.PictureBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.TeensyPicNAND = New System.Windows.Forms.PictureBox()
         Me.TabSPI = New System.Windows.Forms.TabPage()
         Me.TabCommandsSPI = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -141,7 +142,7 @@ Partial Class MainForm
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.TeensyBlinkSPI = New System.Windows.Forms.PictureBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.TeensyPicSPI = New System.Windows.Forms.PictureBox()
         Me.CommandPrompt = New System.Windows.Forms.RichTextBox()
         Me.SaveFileDialogNOR = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDumpNOR = New System.Windows.Forms.OpenFileDialog()
@@ -155,6 +156,10 @@ Partial Class MainForm
         Me.SaveFileDialogSPI = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDumpSPI = New System.Windows.Forms.OpenFileDialog()
         Me.KillProcessButton = New System.Windows.Forms.Button()
+        Me.OpenHexNOR = New System.Windows.Forms.OpenFileDialog()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.OpenHexNAND = New System.Windows.Forms.OpenFileDialog()
+        Me.OpenHexSPI = New System.Windows.Forms.OpenFileDialog()
         Me.TabControl1.SuspendLayout()
         Me.TabNOR.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -169,7 +174,7 @@ Partial Class MainForm
         Me.TabNORrelease.SuspendLayout()
         Me.TabNORerasechip.SuspendLayout()
         CType(Me.TeensyBlinkNOR, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TeensyPicNOR, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabNAND.SuspendLayout()
         Me.TabCommandsNAND.SuspendLayout()
         Me.TabNANDinfo.SuspendLayout()
@@ -181,7 +186,7 @@ Partial Class MainForm
         Me.TabPage4.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TeensyBlinkNAND, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TeensyPicNAND, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabSPI.SuspendLayout()
         Me.TabCommandsSPI.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -193,7 +198,7 @@ Partial Class MainForm
         Me.TabPage7.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TeensyBlinkSPI, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TeensyPicSPI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -219,7 +224,7 @@ Partial Class MainForm
         Me.TabNOR.Controls.Add(Me.Label7)
         Me.TabNOR.Controls.Add(Me.TabCommandsNOR)
         Me.TabNOR.Controls.Add(Me.TeensyBlinkNOR)
-        Me.TabNOR.Controls.Add(Me.PictureBox7)
+        Me.TabNOR.Controls.Add(Me.TeensyPicNOR)
         Me.TabNOR.Location = New System.Drawing.Point(4, 28)
         Me.TabNOR.Name = "TabNOR"
         Me.TabNOR.Padding = New System.Windows.Forms.Padding(3)
@@ -304,10 +309,10 @@ Partial Class MainForm
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(60, 53)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(327, 48)
+        Me.Label1.Size = New System.Drawing.Size(339, 48)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "INFO command : " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "   - Before PS3 power on, set tristate to block PS3 boot." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "   - " & _
-    "When PS3 powered, display NOR information." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label1.Text = "INFO command : " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "   - Before PS3 power on, set tristate to prevent PS3 boot." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "   " & _
+    "- When PS3 powered, display NOR information." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'StartNORinfoButton
         '
@@ -693,17 +698,19 @@ Partial Class MainForm
         Me.TeensyBlinkNOR.Visible = False
         Me.TeensyBlinkNOR.WaitOnLoad = True
         '
-        'PictureBox7
+        'TeensyPicNOR
         '
-        Me.PictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
-        Me.PictureBox7.Location = New System.Drawing.Point(217, 3)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(149, 50)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox7.TabIndex = 13
-        Me.PictureBox7.TabStop = False
-        Me.PictureBox7.WaitOnLoad = True
+        Me.TeensyPicNOR.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.TeensyPicNOR.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TeensyPicNOR.Image = CType(resources.GetObject("TeensyPicNOR.Image"), System.Drawing.Image)
+        Me.TeensyPicNOR.Location = New System.Drawing.Point(217, 3)
+        Me.TeensyPicNOR.Name = "TeensyPicNOR"
+        Me.TeensyPicNOR.Size = New System.Drawing.Size(149, 50)
+        Me.TeensyPicNOR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.TeensyPicNOR.TabIndex = 13
+        Me.TeensyPicNOR.TabStop = False
+        Me.ToolTip.SetToolTip(Me.TeensyPicNOR, "Click to load NORway.hex to Teensy")
+        Me.TeensyPicNOR.WaitOnLoad = True
         '
         'TabNAND
         '
@@ -713,7 +720,7 @@ Partial Class MainForm
         Me.TabNAND.Controls.Add(Me.Label12)
         Me.TabNAND.Controls.Add(Me.PictureBox3)
         Me.TabNAND.Controls.Add(Me.TeensyBlinkNAND)
-        Me.TabNAND.Controls.Add(Me.PictureBox1)
+        Me.TabNAND.Controls.Add(Me.TeensyPicNAND)
         Me.TabNAND.Location = New System.Drawing.Point(4, 28)
         Me.TabNAND.Name = "TabNAND"
         Me.TabNAND.Padding = New System.Windows.Forms.Padding(3)
@@ -1116,17 +1123,19 @@ Partial Class MainForm
         Me.TeensyBlinkNAND.Visible = False
         Me.TeensyBlinkNAND.WaitOnLoad = True
         '
-        'PictureBox1
+        'TeensyPicNAND
         '
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(217, 3)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(149, 50)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 18
-        Me.PictureBox1.TabStop = False
-        Me.PictureBox1.WaitOnLoad = True
+        Me.TeensyPicNAND.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.TeensyPicNAND.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TeensyPicNAND.Image = CType(resources.GetObject("TeensyPicNAND.Image"), System.Drawing.Image)
+        Me.TeensyPicNAND.Location = New System.Drawing.Point(217, 3)
+        Me.TeensyPicNAND.Name = "TeensyPicNAND"
+        Me.TeensyPicNAND.Size = New System.Drawing.Size(149, 50)
+        Me.TeensyPicNAND.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.TeensyPicNAND.TabIndex = 18
+        Me.TeensyPicNAND.TabStop = False
+        Me.ToolTip.SetToolTip(Me.TeensyPicNAND, "Click to load NANDway_SignalBoosterEdition.hex to Teensy")
+        Me.TeensyPicNAND.WaitOnLoad = True
         '
         'TabSPI
         '
@@ -1136,7 +1145,7 @@ Partial Class MainForm
         Me.TabSPI.Controls.Add(Me.PictureBox5)
         Me.TabSPI.Controls.Add(Me.Label15)
         Me.TabSPI.Controls.Add(Me.TeensyBlinkSPI)
-        Me.TabSPI.Controls.Add(Me.PictureBox4)
+        Me.TabSPI.Controls.Add(Me.TeensyPicSPI)
         Me.TabSPI.Location = New System.Drawing.Point(4, 28)
         Me.TabSPI.Name = "TabSPI"
         Me.TabSPI.Padding = New System.Windows.Forms.Padding(3)
@@ -1491,17 +1500,19 @@ Partial Class MainForm
         Me.TeensyBlinkSPI.Visible = False
         Me.TeensyBlinkSPI.WaitOnLoad = True
         '
-        'PictureBox4
+        'TeensyPicSPI
         '
-        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(217, 3)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(149, 50)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox4.TabIndex = 18
-        Me.PictureBox4.TabStop = False
-        Me.PictureBox4.WaitOnLoad = True
+        Me.TeensyPicSPI.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.TeensyPicSPI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TeensyPicSPI.Image = CType(resources.GetObject("TeensyPicSPI.Image"), System.Drawing.Image)
+        Me.TeensyPicSPI.Location = New System.Drawing.Point(217, 3)
+        Me.TeensyPicSPI.Name = "TeensyPicSPI"
+        Me.TeensyPicSPI.Size = New System.Drawing.Size(149, 50)
+        Me.TeensyPicSPI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.TeensyPicSPI.TabIndex = 18
+        Me.TeensyPicSPI.TabStop = False
+        Me.ToolTip.SetToolTip(Me.TeensyPicSPI, "Click to load SPIway.hex to Teensy")
+        Me.TeensyPicSPI.WaitOnLoad = True
         '
         'CommandPrompt
         '
@@ -1518,7 +1529,7 @@ Partial Class MainForm
         '
         'SaveFileDialogNOR
         '
-        Me.SaveFileDialogNOR.Filter = "Binary files (*.1.bin)|*.1.bin"
+        Me.SaveFileDialogNOR.Filter = "Binary files (*.bin)|*.bin"
         '
         'OpenFileDumpNOR
         '
@@ -1542,7 +1553,7 @@ Partial Class MainForm
         '
         'SaveFileDialogNAND
         '
-        Me.SaveFileDialogNAND.Filter = "Binary files (*.1.bin)|*.1.bin"
+        Me.SaveFileDialogNAND.Filter = "Binary files (*.bin)|*.bin"
         '
         'OpenFileDumpNAND
         '
@@ -1562,7 +1573,7 @@ Partial Class MainForm
         '
         'SaveFileDialogSPI
         '
-        Me.SaveFileDialogSPI.Filter = "Binary files (*.1.bin)|*.1.bin"
+        Me.SaveFileDialogSPI.Filter = "Binary files (*.bin)|*.bin"
         '
         'OpenFileDumpSPI
         '
@@ -1573,12 +1584,24 @@ Partial Class MainForm
         Me.KillProcessButton.AutoSize = True
         Me.KillProcessButton.Enabled = False
         Me.KillProcessButton.ForeColor = System.Drawing.Color.Red
-        Me.KillProcessButton.Location = New System.Drawing.Point(115, 641)
+        Me.KillProcessButton.Location = New System.Drawing.Point(114, 641)
         Me.KillProcessButton.Name = "KillProcessButton"
         Me.KillProcessButton.Size = New System.Drawing.Size(93, 23)
         Me.KillProcessButton.TabIndex = 3
         Me.KillProcessButton.Text = "KILL PROCESS"
         Me.KillProcessButton.UseVisualStyleBackColor = True
+        '
+        'OpenHexNOR
+        '
+        Me.OpenHexNOR.Filter = "NORway.hex|NORway.hex"
+        '
+        'OpenHexNAND
+        '
+        Me.OpenHexNAND.Filter = "NANDway_SignalBoosterEdition.hex|NANDway_SignalBoosterEdition.hex"
+        '
+        'OpenHexSPI
+        '
+        Me.OpenHexSPI.Filter = "SPIway.hex|SPIway.hex"
         '
         'MainForm
         '
@@ -1591,9 +1614,10 @@ Partial Class MainForm
         Me.Controls.Add(Me.CommandPrompt)
         Me.Controls.Add(Me.TabControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.Name = "MainForm"
-        Me.Text = "WAY-launchers v1.00, by littlebalup"
+        Me.Text = "WAY-launchers v1.01, by littlebalup"
         Me.TabControl1.ResumeLayout(False)
         Me.TabNOR.ResumeLayout(False)
         Me.TabNOR.PerformLayout()
@@ -1617,7 +1641,7 @@ Partial Class MainForm
         Me.TabNORerasechip.ResumeLayout(False)
         Me.TabNORerasechip.PerformLayout()
         CType(Me.TeensyBlinkNOR, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TeensyPicNOR, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabNAND.ResumeLayout(False)
         Me.TabNAND.PerformLayout()
         Me.TabCommandsNAND.ResumeLayout(False)
@@ -1636,7 +1660,7 @@ Partial Class MainForm
         Me.TabPage4.PerformLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TeensyBlinkNAND, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TeensyPicNAND, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabSPI.ResumeLayout(False)
         Me.TabSPI.PerformLayout()
         Me.TabCommandsSPI.ResumeLayout(False)
@@ -1655,7 +1679,7 @@ Partial Class MainForm
         Me.TabPage7.PerformLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TeensyBlinkSPI, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TeensyPicSPI, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1708,11 +1732,11 @@ Partial Class MainForm
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents PictureBox5 As System.Windows.Forms.PictureBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents PictureBox7 As System.Windows.Forms.PictureBox
+    Friend WithEvents TeensyPicNOR As System.Windows.Forms.PictureBox
     Friend WithEvents TeensyBlinkNAND As System.Windows.Forms.PictureBox
-    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents TeensyPicNAND As System.Windows.Forms.PictureBox
     Friend WithEvents TeensyBlinkSPI As System.Windows.Forms.PictureBox
-    Friend WithEvents PictureBox4 As System.Windows.Forms.PictureBox
+    Friend WithEvents TeensyPicSPI As System.Windows.Forms.PictureBox
     Friend WithEvents SaveScreenButton As System.Windows.Forms.Button
     Friend WithEvents SaveFileDialogScreen As System.Windows.Forms.SaveFileDialog
     Friend WithEvents Label16 As System.Windows.Forms.Label
@@ -1792,5 +1816,9 @@ Partial Class MainForm
     Friend WithEvents SaveFileDialogSPI As System.Windows.Forms.SaveFileDialog
     Friend WithEvents OpenFileDumpSPI As System.Windows.Forms.OpenFileDialog
     Friend WithEvents KillProcessButton As System.Windows.Forms.Button
+    Friend WithEvents OpenHexNOR As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
+    Friend WithEvents OpenHexNAND As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents OpenHexSPI As System.Windows.Forms.OpenFileDialog
 
 End Class
