@@ -6,6 +6,7 @@ New GUI for NORway, NANDway and SPIway from Judges (https://github.com/hjudges/N
 ------------------------------------------------------------------------
 ATTENTION : The use of this program is at your own risk!
 The author can not be held responsible for the consequences of its use.
+
 ------------------------------------------------------------------------
 
 Simple GUI, written in VB.net and batch, to easily launch and work with the 
@@ -41,6 +42,7 @@ CHANGE LOG:
 	Dump file extention changed: was (*.x.bin), now is (*.bin) if only one dump and (*_x.bin) if multi-dumps.
 
  v1.00: First release
+ 
 -------------------------------------------------------------------------
 
 Source code available at https://github.com/littlebalup/WAY-launchers	
