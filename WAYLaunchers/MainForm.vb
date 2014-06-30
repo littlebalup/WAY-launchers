@@ -347,7 +347,7 @@ Public Class MainForm
     'Onglet NANDdump *****************************************************************************************
     Private Sub StartNANDdumpButton_Click(sender As Object, e As EventArgs) Handles StartNANDdumpButton.Click
 
-        Dim DumpFileNAND As String = Replace(SaveToTextBoxNOR.Text, ".bin", "")
+        Dim DumpFileNAND As String = Replace(SaveToTextBoxNAND.Text, ".bin", "")
         DumpFileNAND = Replace(DumpFileNAND, ".BIN", "")
 
         CommandPrompt.Text = ""
@@ -510,7 +510,7 @@ Public Class MainForm
     'Onglet SPIdump *****************************************************************************************
     Private Sub StartSPIdumpButton_Click(sender As Object, e As EventArgs) Handles StartSPIdumpButton.Click
 
-        Dim DumpFileSPI As String = Replace(SaveToTextBoxNOR.Text, ".bin", "")
+        Dim DumpFileSPI As String = Replace(SaveToTextBoxSPI.Text, ".bin", "")
         DumpFileSPI = Replace(DumpFileSPI, ".BIN", "")
 
         CommandPrompt.Text = ""
