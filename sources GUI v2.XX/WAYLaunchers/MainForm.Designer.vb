@@ -1576,7 +1576,7 @@ Partial Class MainForm
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.Name = "MainForm"
-        Me.Text = "WAY-launchers v2.01, by littlebalup"
+        Me.Text = "WAY-launchers v2.02, by littlebalup"
         Me.TabControl1.ResumeLayout(False)
         Me.TabNOR.ResumeLayout(False)
         Me.TabNOR.PerformLayout()

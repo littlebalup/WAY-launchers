@@ -37,6 +37,7 @@ rem ------------- NOR codes ----------------------------------------------------
 :NORinfo
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -56,6 +57,7 @@ goto end
 :NORdump
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -159,6 +161,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -184,6 +187,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -209,6 +213,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -234,6 +239,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -259,6 +265,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -284,6 +291,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -309,6 +317,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -333,6 +342,7 @@ goto end
 :NORrelease
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -352,6 +362,7 @@ goto end
 :NORerasechip
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -374,6 +385,7 @@ rem ------------- NAND codes ---------------------------------------------------
 :NANDinfo
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -393,6 +405,7 @@ goto end
 :NANDdump
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -496,6 +509,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -521,6 +535,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -546,6 +561,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -574,6 +590,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -625,6 +642,7 @@ rem ------------- SPI codes ----------------------------------------------------
 :SPIinfo
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -644,6 +662,7 @@ goto end
 :SPIdump
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -747,6 +766,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -770,6 +790,7 @@ goto end
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
@@ -792,6 +813,7 @@ goto end
 :SPIerasechip
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
 echo.
 if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
 echo.
