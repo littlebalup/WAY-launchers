@@ -36,6 +36,7 @@ INSTALL INSTRUCTIONS:
 
 -------------------------------------------------------------------------
 CHANGE LOG:
+
  v2.02: Added compatibility with the latest USB serial drivers from PRJC: 
         "Teensy USB Serial" driver now detected as well as the old one.
         
