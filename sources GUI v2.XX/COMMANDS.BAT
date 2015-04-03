@@ -49,9 +49,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% info
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORdump
@@ -78,9 +78,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -100,9 +100,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -178,9 +178,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% write %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORvwrite
@@ -204,9 +204,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% vwrite %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORwriteword
@@ -230,9 +230,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% writeword %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORvwriteword
@@ -256,9 +256,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% vwriteword %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORwritewordubm
@@ -282,9 +282,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% writewordubm %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORvwritewordubm
@@ -308,9 +308,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% vwritewordubm %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORverify
@@ -334,9 +334,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% verify %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORrelease
@@ -354,9 +354,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% release
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NORerasechip
@@ -374,9 +374,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\norway.py %teensy_port% erasechip
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 
@@ -397,9 +397,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 info
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NANDdump
@@ -426,9 +426,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -448,9 +448,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -526,9 +526,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 write %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NANDvwrite
@@ -552,9 +552,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 vwrite %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NANDdiffwrite
@@ -581,9 +581,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 diffwrite %file_name% %diff_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NANDvdiffwrite
@@ -610,9 +610,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py %teensy_port% 0 vdiffwrite %file_name% %diff_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :NANDps3badblocks
@@ -631,9 +631,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\nandway.py ps3badblocks %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 
@@ -654,9 +654,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% info
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :SPIdump
@@ -683,9 +683,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -705,9 +705,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% dump %dump_file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 echo Dump saved as :
 echo "%view_file_name%"
 echo.
@@ -781,9 +781,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% write %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :SPIvwrite
@@ -805,9 +805,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% vwrite %file_name%
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 :SPIerasechip
@@ -825,9 +825,9 @@ rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
 %myfiles%\spiway.py %teensy_port% erasechip
 echo -------------------------------------------------------------------------------
-rem ChangeColor 10 0
 echo.
 if %errorlevel% NEQ 0 goto erreur
+rem ChangeColor 10 0
 goto end
 
 
