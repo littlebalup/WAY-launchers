@@ -37,6 +37,8 @@ INSTALL INSTRUCTIONS:
 -------------------------------------------------------------------------
 CHANGE LOG:
 
+ v2.03: Correction of a minor bug concerning errorlevel detection from python scripts.
+        
  v2.02: Added compatibility with the latest USB serial drivers from PRJC: 
         "Teensy USB Serial" driver now detected as well as the old one.
         
