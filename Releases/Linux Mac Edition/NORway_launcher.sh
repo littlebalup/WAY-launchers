@@ -56,6 +56,17 @@ for port in /dev/ttyACM*
 		res=0; teensy_port=$port; break;
 	fi
   done
+if [ $res == 1 ]
+  then
+    for port in /dev/tty.usbmodem*
+	  do
+		./NORway.py $port &>/dev/null
+		if [ $? == 0 ]
+		  then
+			res=0; teensy_port=$port; break;
+		fi
+  done
+fi  
 if [ $res == 0 ]
 	  then
 		echo -e "Teensy found on port \033[37m"$teensy_port"\033[32m"
@@ -143,11 +154,11 @@ then
 echo "No *.bin or *.BIN file available. Aborted."
 fi 
 while true; do
- read -p "Select a file (ex: \"mydump.bin\") : " fn
+ read -p "Select a dump file (ex: \"mydump.bin\") : " fn
  file_name="`pwd`/$fn"
  if [ -f "$file_name" ]
   then
-	 if [ $(stat -c%s "$file_name") -eq 16777216 ]
+	 if [ $(ls -nl "$file_name" | awk '{print $5}') -eq 16777216 ]
 	  then
 	     break
 	  else
@@ -174,7 +185,10 @@ while true; do
   fi
 done
 echo
-echo -e "NOR will be written using file \033[37m$file_name\033[32m"
+case $cmd in
+	"verify" ) echo -e "NOR content will be verified against dump file \033[37m$file_name\033[32m";;
+			*) echo -e "NOR will be written using dump file \033[37m$file_name\033[32m";;
+esac
 echo
 }
 
@@ -274,7 +288,7 @@ header ()
 {
 clear
 echo -e "\033[33m*******************************************************************************"
-echo "                   NORway Launcher \"LE\" v1.00, by littlebalup"
+echo "                  NORway Launcher \"LME\" v1.01, by littlebalup"
 echo "*******************************************************************************"
 echo -e "\033[32m"
 }
@@ -299,6 +313,8 @@ echo " R) RELEASE (release tristate, so the PS3 can boot)"
 echo " S) Set Teensy USB serial port"
 echo " Q) Quit"
 echo
+file_name=""
+dump_file_name=""
 while true; do
 	read -p "Select a command: " n
 	case $n in
@@ -337,6 +353,7 @@ if [ "$cmd_type" == "dump" ]
 	  set_dumpfilename
 	  run
 	done
+	echo
 	if [ $nbr_dump -gt 1 ]
 	  then
 		while true; do
@@ -365,7 +382,7 @@ if [ "$cmd_type" == "dump" ]
 			  else
 				VAR=`expr $VAR + 1`
 				echo "Please wait..."
-				cmp -l "$file_name"_"$loop".bin "$file_name"_"$VAR".bin | mawk 'function oct2dec(oct, dec) {for (i = 1; i <= length(oct); i++) {dec *= 8; dec += substr(oct, i, 1)}; return dec} {printf "%08X %02X %02X\n", $1, oct2dec($2), oct2dec($3)}' >>compare_log.txt;
+				cmp -l "$file_name"_"$loop".bin "$file_name"_"$VAR".bin | awk 'function oct2dec(oct, dec) {for (i = 1; i <= length(oct); i++) {dec *= 8; dec += substr(oct, i, 1)}; return dec} {printf "%08X %02X %02X\n", $1, oct2dec($2), oct2dec($3)}' >>compare_log.txt;
 				errorlevel=${PIPESTATUS[0]}
 				case $errorlevel in
 					0) echo -e "\033[37m"$file_name"_"$loop"bin\033[32m same as \033[37m"$file_name"_"$VAR".bin\033[32m";;
@@ -392,6 +409,7 @@ if [ "$cmd_type" == "dump" ]
       dump_file_name="$file_name"
 	  run
 fi
+echo
 pause
 clear
 commandes
@@ -423,19 +441,19 @@ echo -e '\033]2;'$title'\007'
 echo -e "\033[32m"
 clear
 
-echo "                                                             Linux Edition V1.0"
-echo -e "\033[33m           _   _  ____  _____"
-echo -e "          | \ | |/ __ \|  __ \                            \033[36m       .--.     \033[33m"
-echo -e "          |  \| | |  | | |__) |_      ____ _ _   _        \033[36m      |\033[37mo\033[36m\033[33m_\033[37mo\033[36m |    \033[33m"
-echo -e "          | . \` | |  | |  _  /\ \_/\_/ / _\` | | | |       \033[36m      |\033[33m\_/\033[36m |    \033[33m"
-echo -e "          | |\  | |__| | | \ \ \      / (_| | |_| |       \033[36m     /\033[37m/   \ \033[36m\   \033[33m"
-echo -e "          |_| \_|\____/|_|  \_\ \_/\_/ \__,_|\__, |       \033[36m    (\033[37m|     |\033[36m )  \033[33m"
-echo -e "                 _                        _   __/ |          /'\_   _/'\  "
-echo -e "                | |                      | | |___/           \___)\033[36m-\033[33m(___/  "
-echo "                | | __ _ _   _ _ __   ___| |__   ___ _ __ "
-echo "                | |/ _\` | | | | '_ \ / __| '_ \ / _ \ '__| "
-echo "                | | (_| | |_| | | | | (__| | | |  __/ | "
-echo "                |_|\__,_|\__,_|_| |_|\___|_| |_|\___|_| "
+echo "                                                     Linux & Mac Edition v1.01"
+echo -e "\033[33m                  _   _  ____  _____"
+echo -e "                 | \ | |/ __ \|  __ \                          \033[36m       .--.     \033[33m"
+echo -e "                 |  \| | |  | | |__) |_      ____ _ _   _      \033[36m      |\033[37mo\033[36m\033[33m_\033[37mo\033[36m |    \033[33m"
+echo -e "                 | . \` | |  | |  _  /\ \_/\_/ / _\` | | | |     \033[36m      |\033[33m\_/\033[36m |    \033[33m"
+echo -e "                 | |\  | |__| | | \ \ \      / (_| | |_| |     \033[36m     /\033[37m/   \ \033[36m\   \033[33m"
+echo -e "\033[37m          .:'  \033[33m  |_| \_|\____/|_|  \_\ \_/\_/ \__,_|\__, |     \033[36m    (\033[37m|     |\033[36m )  \033[33m"
+echo -e "\033[37m      __ :'__  \033[33m         _                        _   __/ |        /'\_   _/'\  "
+echo -e "\033[37m   .'\`  \`-'  \`\`.  \033[33m     | |                      | | |___/         \___)\033[36m-\033[33m(___/  "
+echo -e "\033[37m  :          .-'   \033[33m    | | __ _ _   _ _ __   ___| |__   ___ _ __ "
+echo -e "\033[37m  :         :     \033[33m     | |/ _\` | | | | '_ \ / __| '_ \ / _ \ '__| "
+echo -e "\033[37m   :         \`-;  \033[33m     | | (_| | |_| | | | | (__| | | |  __/ | "
+echo -e "\033[37m    \`.__.-.__.'  \033[33m      |_|\__,_|\__,_|_| |_|\___|_| |_|\___|_| "
 echo
 echo  -e "\033[32m-------------------------------------------------------------------------------"
 echo " For the execution of NORway by Judges (www.github.com/hjudges/NORway)."
