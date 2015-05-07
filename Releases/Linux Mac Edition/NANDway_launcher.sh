@@ -3,6 +3,8 @@
 # default serial port : (to find your teensy serial port, plug or unplug-replug it, then run "dmesg" command. Last lines should give you your ttyACM* port)
 default_teensy_port="/dev/ttyACM0"
 
+build_version="v1.02"
+
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$script_dir"
 
@@ -10,6 +12,19 @@ pause ()
 {
 echo "Press [Enter] to continue... "
 read -p "$*"
+}
+
+check_nandway ()
+{
+if [ ! -x "NANDway.py" ]
+  then
+	warning_nandwayfile
+fi
+md5=($(openssl md5 NANDway.py))
+if [ ${md5[1]} != "3e389a1573d3a3c1d986c90fa00ee545" ]
+  then
+	warning_nandwayversion
+fi
 }
 
 warning_nandwayfile ()
@@ -40,7 +55,39 @@ echo
 echo
 echo
 pause
+clear
 exit
+}
+
+warning_nandwayversion ()
+{
+clear
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo -e "\033[33m                              ---- WARNING ----"
+echo
+echo "              This script has been designed to run NANDway v0.64."
+echo "           Your NANDway.py file does not seem to match this version."
+echo "                So, this script may run correctly... or not."
+echo
+echo "            You can get the correct version from Judges repository:"
+echo "                        (www.github.com/hjudges/NORway)"
+echo
+echo -e "                             -------------------\033[32m"
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+pause
 }
 
 auto_teensy_port()
@@ -117,7 +164,7 @@ if [ $? != 0 ]
 fi
 echo -e "\033[32m"
 echo -e "Teensy USB serial port actually set to: \033[37m"$teensy_port"\033[32m"
-if [ ! -k "$teensy_port" ] 
+if [ ! -c "$teensy_port" ]
   then 
 	echo -e "\033[33mWarning: this port does not seem to exist!\033[32m"
 fi
@@ -126,7 +173,7 @@ while true; do
     case $yn in
         y|Y ) 	read -p "Enter new serial port: " teensy_port
 				echo -e "Teensy serial port now set to: \033[37m"$teensy_port"\033[32m" 
-				if [ ! -k "$teensy_port" ] 
+				if [ ! -c "$teensy_port" ]
 				  then 
 					echo -e "\033[33mWarning: this port does not seem to exist!\033[32m"
 				  else
@@ -155,9 +202,21 @@ echo -e "\033[37m---------------------------------------------------------------
 echo -e "\033[32m"
 count=`ls -1 *.bin *.BIN 2>/dev/null | wc -l`
 if [ $count = 0 ]
-then 
-echo "No *.bin or *.BIN file available. Aborted."
-fi 
+  then 
+    echo "No dump file type *.bin or *.BIN available. Aborted."
+	pause
+    commandes
+fi
+if [ $cmd_type == "diffwrite" ]
+  then
+	count=`ls -1 *.txt *.TXT 2>/dev/null | wc -l`
+	if [ $count = 0 ]
+	  then 
+		echo "No diff. file type *.txt or *.TXT available. Aborted."
+		pause
+		commandes
+	fi
+fi
 while true; do
  read -p "Select a dump file (ex: \"mydump.bin\") : " fn
  file_name="`pwd`/$fn"
@@ -315,7 +374,7 @@ header ()
 {
 clear
 echo -e "\033[33m*******************************************************************************"
-echo "                  NANDway Launcher \"LME\" v1.01, by littlebalup"
+echo "                  NANDway Launcher \"LME\" "$build_version", by littlebalup"
 echo "*******************************************************************************"
 echo -e "\033[32m"
 }
@@ -350,7 +409,7 @@ while true; do
 		6) cmd="vdiffwrite"; cmd_type="diffwrite"; scrypt_start;;
 		7) cmd="ps3badblocks"; cmd_type="ps3bb"; scrypt_start;;
 		s|S) header; teensy_port;;
-		q|Q) exit;;
+		q|Q) clear; exit;;
 		*) echo "Invalide command, select again.";;
 	esac
 done
@@ -388,7 +447,7 @@ if [ "$cmd_type" == "dump" ]
 		echo
 		echo -------------------------------------------------------------------------------
 		loop=0; errorresult=0; errorfile=0;	errorcode=0
-		echo "NANDway launcher, file compare log dated : "$(date +%x)" at "$(date +%X)"" >compare_log.txt; echo >>compare_log.txt
+		echo "NANDway launcher, file compare log dated : "$(date +%x)" at "$(date +%X)"" > compare_log.txt;
 		while true; do
 		if [ $loop == $nbr_dump ]
 		  then
@@ -403,18 +462,20 @@ if [ "$cmd_type" == "dump" ]
 			  else
 				VAR=`expr $VAR + 1`
 				echo "Please wait..."
-				cmp -l "$file_name"_"$loop".bin "$file_name"_"$VAR".bin | awk 'function oct2dec(oct, dec) {for (i = 1; i <= length(oct); i++) {dec *= 8; dec += substr(oct, i, 1)}; return dec} {printf "%08X %02X %02X\n", $1, oct2dec($2), oct2dec($3)}' >>compare_log.txt;
+				echo >> compare_log.txt
+				echo -e "Comparing \""$file_name"_"$loop".bin\" with \""$file_name"_"$VAR".bin\"\n[Offset] [FileA] [FileB]" >> compare_log.txt
+				cmp -l "$file_name"_"$loop".bin "$file_name"_"$VAR".bin | awk 'function oct2dec(oct, dec) {for (i = 1; i <= length(oct); i++) {dec *= 8; dec += substr(oct, i, 1)}; return dec} {printf "%08X %02X %02X\n", $1-1, oct2dec($2), oct2dec($3)}' >> compare_log.txt;
 				errorlevel=${PIPESTATUS[0]}
 				case $errorlevel in
-					0) echo -e "\033[37m"$file_name"_"$loop"bin\033[32m same as \033[37m"$file_name"_"$VAR".bin\033[32m";;
-					1) echo -e "\033[37m"$file_name"_"$loop".bin\033[33m different from \033[37m"$file_name"_"$VAR".bin\033[32m"; errorresult=$errorlevel;;
-					2) errorfile=$errorlevel;;
+					0) echo -e "\033[37m"$file_name"_"$loop".bin\033[32m same as \033[37m"$file_name"_"$VAR".bin\033[32m"; echo "Result: files are identical." >> compare_log.txt;;
+					1) echo -e "\033[37m"$file_name"_"$loop".bin\033[33m different from \033[37m"$file_name"_"$VAR".bin\033[32m"; echo "Result: files are different." >> compare_log.txt; errorresult=$errorlevel;;
+					2) echo "Result: error (missing file(s))." >> compare_log.txt; errorfile=$errorlevel;;
 			    esac
 			fi
 			done
 		fi
 		done
-		echo >>compare_log.txt; echo "END" >>compare_log.txt
+		echo >> compare_log.txt; echo "END" >> compare_log.txt
 		errorcode=""$errorfile""$errorresult""
 		echo "Done."
 		echo -------------------------------------------------------------------------------
@@ -467,7 +528,7 @@ echo -e '\033]2;'$title'\007'
 echo -e "\033[32m"
 clear
 
-echo "                                                     Linux & Mac Edition v1.01"
+echo "                                                     Linux & Mac Edition "$build_version""
 echo -e "\033[33m                _   _          _   _ _____"
 echo -e "               | \ | |   /\   | \ | |  __ \                      \033[36m     .--.     \033[33m"
 echo -e "               |  \| |  /  \  |  \| | |  | |_      ____ _ _   _  \033[36m    |\033[37mo\033[36m\033[33m_\033[37mo\033[36m |    \033[33m"
@@ -482,18 +543,15 @@ echo -e "\033[37m   :         \`-;  \033[33m     | | (_| | |_| | | | | (__| | | 
 echo -e "\033[37m    \`.__.-.__.'  \033[33m      |_|\__,_|\__,_|_| |_|\___|_| |_|\___|_|"
 echo
 echo  -e "\033[32m-------------------------------------------------------------------------------"
-echo " For the execution of NANDway (SBE) by Judges (www.github.com/hjudges/NORway)."
+echo " Script to easily run NANDway (SBE) by Judges (www.github.com/hjudges/NORway)."
 echo " Installation Note:"
 echo "    - Place this program into the same folder as NANDway.py file"
 echo "    - Execute"
-echo  -e "\033[31m ATTENTION : The use of this program is at your own risk."
+echo  -e "\033[31m ATTENTION! : The use of this program is at your own risk."
 echo " The author can not be held responsible for the consequences of its use."
 echo  -e "\033[32m-------------------------------------------------------------------------------"
 pause
-if [ ! -x "NANDway.py" ]
-  then
-	warning_nandwayfile
-fi
+check_nandway
 header
 auto_teensy_port
 exit
