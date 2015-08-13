@@ -48,6 +48,7 @@ Partial Class MainForm
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.CheckBoxPFWwriteNOR = New System.Windows.Forms.CheckBox()
         Me.CheckBoxWordUbmNOR = New System.Windows.Forms.CheckBox()
         Me.CheckBoxVerifyNOR = New System.Windows.Forms.CheckBox()
         Me.CheckBoxWordNOR = New System.Windows.Forms.CheckBox()
@@ -56,6 +57,7 @@ Partial Class MainForm
         Me.Label5 = New System.Windows.Forms.Label()
         Me.StartNORwriteButton = New System.Windows.Forms.Button()
         Me.TabNORverify = New System.Windows.Forms.TabPage()
+        Me.CheckBoxPFWverifyNOR = New System.Windows.Forms.CheckBox()
         Me.VerifyWithButtonNOR = New System.Windows.Forms.Button()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.VerifyWithTextBoxNOR = New System.Windows.Forms.TextBox()
@@ -287,6 +289,8 @@ Partial Class MainForm
         Me.TabCommandsNOR.Size = New System.Drawing.Size(581, 179)
         Me.TabCommandsNOR.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.TabCommandsNOR.TabIndex = 0
+        Me.ToolTip.SetToolTip(Me.TabCommandsNOR, "Only verify data from offset 0x40000, length 0xE80000. Keep unchecked for a full " & _
+        "verification.")
         '
         'TabNORinfo
         '
@@ -465,6 +469,7 @@ Partial Class MainForm
         'Panel2
         '
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.CheckBoxPFWwriteNOR)
         Me.Panel2.Controls.Add(Me.CheckBoxWordUbmNOR)
         Me.Panel2.Controls.Add(Me.CheckBoxVerifyNOR)
         Me.Panel2.Controls.Add(Me.CheckBoxWordNOR)
@@ -475,6 +480,19 @@ Partial Class MainForm
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(455, 99)
         Me.Panel2.TabIndex = 7
+        '
+        'CheckBoxPFWwriteNOR
+        '
+        Me.CheckBoxPFWwriteNOR.AutoSize = True
+        Me.CheckBoxPFWwriteNOR.Enabled = False
+        Me.CheckBoxPFWwriteNOR.Location = New System.Drawing.Point(270, 40)
+        Me.CheckBoxPFWwriteNOR.Name = "CheckBoxPFWwriteNOR"
+        Me.CheckBoxPFWwriteNOR.Size = New System.Drawing.Size(158, 17)
+        Me.CheckBoxPFWwriteNOR.TabIndex = 12
+        Me.CheckBoxPFWwriteNOR.Text = "Write PerFirmware data only"
+        Me.ToolTip.SetToolTip(Me.CheckBoxPFWwriteNOR, "Only write data from offset 0x40000, length 0xE80000. Keep unchecked for a full w" & _
+        "rite.")
+        Me.CheckBoxPFWwriteNOR.UseVisualStyleBackColor = True
         '
         'CheckBoxWordUbmNOR
         '
@@ -489,7 +507,7 @@ Partial Class MainForm
         'CheckBoxVerifyNOR
         '
         Me.CheckBoxVerifyNOR.AutoSize = True
-        Me.CheckBoxVerifyNOR.Location = New System.Drawing.Point(271, 40)
+        Me.CheckBoxVerifyNOR.Location = New System.Drawing.Point(270, 68)
         Me.CheckBoxVerifyNOR.Name = "CheckBoxVerifyNOR"
         Me.CheckBoxVerifyNOR.Size = New System.Drawing.Size(101, 17)
         Me.CheckBoxVerifyNOR.TabIndex = 10
@@ -545,6 +563,7 @@ Partial Class MainForm
         '
         'TabNORverify
         '
+        Me.TabNORverify.Controls.Add(Me.CheckBoxPFWverifyNOR)
         Me.TabNORverify.Controls.Add(Me.VerifyWithButtonNOR)
         Me.TabNORverify.Controls.Add(Me.Label27)
         Me.TabNORverify.Controls.Add(Me.VerifyWithTextBoxNOR)
@@ -557,6 +576,19 @@ Partial Class MainForm
         Me.TabNORverify.TabIndex = 5
         Me.TabNORverify.Text = "VERIFY"
         Me.TabNORverify.UseVisualStyleBackColor = True
+        '
+        'CheckBoxPFWverifyNOR
+        '
+        Me.CheckBoxPFWverifyNOR.AutoSize = True
+        Me.CheckBoxPFWverifyNOR.Enabled = False
+        Me.CheckBoxPFWverifyNOR.Location = New System.Drawing.Point(16, 120)
+        Me.CheckBoxPFWverifyNOR.Name = "CheckBoxPFWverifyNOR"
+        Me.CheckBoxPFWverifyNOR.Size = New System.Drawing.Size(159, 17)
+        Me.CheckBoxPFWverifyNOR.TabIndex = 17
+        Me.CheckBoxPFWverifyNOR.Text = "Verify PerFirmware data only"
+        Me.ToolTip.SetToolTip(Me.CheckBoxPFWverifyNOR, "Only write data from offset 0x40000, length 0xE80000. Keep unchecked for a full w" & _
+        "rite.")
+        Me.CheckBoxPFWverifyNOR.UseVisualStyleBackColor = True
         '
         'VerifyWithButtonNOR
         '
@@ -1576,7 +1608,7 @@ Partial Class MainForm
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.Name = "MainForm"
-        Me.Text = "WAY-launchers v2.03, by littlebalup"
+        Me.Text = "WAY-launchers v2.04, by littlebalup"
         Me.TabControl1.ResumeLayout(False)
         Me.TabNOR.ResumeLayout(False)
         Me.TabNOR.PerformLayout()
@@ -1775,5 +1807,7 @@ Partial Class MainForm
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
     Friend WithEvents OpenHexNAND As System.Windows.Forms.OpenFileDialog
     Friend WithEvents OpenHexSPI As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents CheckBoxPFWwriteNOR As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxPFWverifyNOR As System.Windows.Forms.CheckBox
 
 End Class

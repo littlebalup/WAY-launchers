@@ -1,16 +1,16 @@
 @echo off
 TITLE WAY-launchers : CONSOLE
 
-set "command=%1"
-set "cmdfile1="%~2""
-set "cmdfile2="%~3""
-set /a argument1=%4 2>nul
-set "argument2=%5"
+set "command=%1"			rem command
+set "cmdfile1="%~2""		rem dump filename
+set "cmdfile2="%~3""		rem diff filename (NAND)
+set /a argument1=%4 2>nul	rem qtty of dumps
+set "argument2=%5"			rem compare dumps / write perfw arg
 
 rem ChangeColor 14 0
 echo.
 echo *******************************************************************************
-echo                          WAY-launchers, by littlebalup
+echo                       WAY-launchers v2.04, by littlebalup
 echo *******************************************************************************
 echo.
 rem ChangeColor 10 0
@@ -43,7 +43,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% INFO
+echo Starting : NORway.py %teensy_port% info
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ set dump_file_name=%file_name%.bin
 set view_file_name=%light_file_name%.bin
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% DUMP "%view_file_name%"
+echo Starting : NORway.py %teensy_port% dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ set dump_file_name=%file_name%_%VAR%.bin
 set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% DUMP "%view_file_name%"
+echo Starting : NORway.py %teensy_port% dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -158,6 +158,7 @@ if %errorcode%==21 goto erreurbincheckfile
 goto end
 
 :NORwrite
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -172,11 +173,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% WRITE %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% write %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% write %file_name%
+%myfiles%\norway.py %teensy_port% write %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -184,6 +186,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORvwrite
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -198,11 +201,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% VWRITE %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% vwrite %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% vwrite %file_name%
+%myfiles%\norway.py %teensy_port% vwrite %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -210,6 +214,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORwriteword
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -224,11 +229,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% WRITEWORD %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% writeword %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% writeword %file_name%
+%myfiles%\norway.py %teensy_port% writeword %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -236,6 +242,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORvwriteword
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -250,11 +257,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% VWRITEWORD %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% vwriteword %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% vwriteword %file_name%
+%myfiles%\norway.py %teensy_port% vwriteword %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -262,6 +270,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORwritewordubm
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -276,11 +285,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% WRITEWORDUBM %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% writewordubm %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% writewordubm %file_name%
+%myfiles%\norway.py %teensy_port% writewordubm %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -288,6 +298,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORvwritewordubm
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -302,11 +313,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% VWRITEWORDUBM %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% vwritewordubm %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% vwritewordubm %file_name%
+%myfiles%\norway.py %teensy_port% vwritewordubm %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -314,6 +326,7 @@ rem ChangeColor 10 0
 goto end
 
 :NORverify
+set perfw=
 set file_name=
 set teensy_port=
 for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
@@ -328,11 +341,12 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==16777216 goto erreurtaillefichierNOR
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% VERIFY %file_name%
+if %argument2% EQU True (set "perfw=perfw")
+echo Starting : NORway.py %teensy_port% verify %file_name% %perfw%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
-%myfiles%\norway.py %teensy_port% verify %file_name%
+%myfiles%\norway.py %teensy_port% verify %file_name% %perfw%
 echo -------------------------------------------------------------------------------
 echo.
 if %errorlevel% NEQ 0 goto erreur
@@ -348,7 +362,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% RELEASE
+echo Starting : NORway.py %teensy_port% release
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -368,7 +382,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
-echo Starting : NORway.py %teensy_port% ERASECHIP
+echo Starting : NORway.py %teensy_port% erasechip
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -391,7 +405,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 INFO
+echo Starting : NANDway.py %teensy_port% 0 info
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -420,7 +434,7 @@ set dump_file_name=%file_name%.bin
 set view_file_name=%light_file_name%.bin
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 DUMP "%view_file_name%"
+echo Starting : NANDway.py %teensy_port% 0 dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -442,7 +456,7 @@ set dump_file_name=%file_name%_%VAR%.bin
 set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 DUMP "%view_file_name%"
+echo Starting : NANDway.py %teensy_port% 0 dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -520,7 +534,7 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==138412032 goto erreurtaillefichierNAND
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 WRITE %file_name%
+echo Starting : NANDway.py %teensy_port% 0 write %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -546,7 +560,7 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==138412032 goto erreurtaillefichierNAND
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 VWRITE %file_name%
+echo Starting : NANDway.py %teensy_port% 0 vwrite %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -575,7 +589,7 @@ if not exist %diff_file_name% goto erreurfichiertxt
 if %diff_file_name% EQU "" goto erreurfichiertxt
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 DIFFWRITE %file_name%
+echo Starting : NANDway.py %teensy_port% 0 diffwrite %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -604,7 +618,7 @@ if not exist %diff_file_name% goto erreurfichiertxt
 if %diff_file_name% EQU "" goto erreurfichiertxt
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py %teensy_port% 0 VDIFFWRITE %file_name%
+echo Starting : NANDway.py %teensy_port% 0 vdiffwrite %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -625,7 +639,7 @@ for %%A in (%file_name%) do set filesize=%%~zA
 if not %filesize%==138412032 goto erreurtaillefichierNAND
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
-echo Starting : NANDway.py PS3BADBLOCKS %file_name%
+echo Starting : NANDway.py ps3badblocks %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -648,7 +662,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% INFO
+echo Starting : SPIway.py %teensy_port% info
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -677,7 +691,7 @@ set dump_file_name=%file_name%.bin
 set view_file_name=%light_file_name%.bin
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% DUMP "%view_file_name%"
+echo Starting : SPIway.py %teensy_port% dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -699,7 +713,7 @@ set dump_file_name=%file_name%_%VAR%.bin
 set view_file_name=%light_file_name%_%VAR%.bin
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% DUMP "%view_file_name%"
+echo Starting : SPIway.py %teensy_port% dump "%view_file_name%"
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -775,7 +789,7 @@ if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% WRITE %file_name%
+echo Starting : SPIway.py %teensy_port% write %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -799,7 +813,7 @@ if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% VWRITE %file_name%
+echo Starting : SPIway.py %teensy_port% vwrite %file_name%
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------
@@ -819,7 +833,7 @@ if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto e
 echo.
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
-echo Starting : SPIway.py %teensy_port% ERASECHIP
+echo Starting : SPIway.py %teensy_port% erasechip
 echo.
 rem ChangeColor 7 0
 echo -------------------------------------------------------------------------------

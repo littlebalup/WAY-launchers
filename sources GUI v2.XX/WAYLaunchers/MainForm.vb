@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Security.Cryptography
+Imports System.Text
 Public Class MainForm
 
     Private Sub MainForm_Closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
@@ -97,9 +99,8 @@ Public Class MainForm
             WordArgument = ""
         End If
 
-
         TeensyBlinkNOR.Visible = True
-        RunCommandCom("COMMANDS.EXE", TabControl1.SelectedTab.Text & VerifyArgument & TabCommandsNOR.SelectedTab.Text & WordArgument & " " & Chr(34) & WriteWithTextBoxNOR.Text & Chr(34))
+        RunCommandCom("COMMANDS.EXE", TabControl1.SelectedTab.Text & VerifyArgument & TabCommandsNOR.SelectedTab.Text & WordArgument & " " & Chr(34) & WriteWithTextBoxNOR.Text & Chr(34) & " NUL NUL " & CheckBoxPFWwriteNOR.Checked)
 
     End Sub
 
@@ -129,9 +130,8 @@ Public Class MainForm
     'Onglet NORverify *****************************************************************************************
     Private Sub StartNORverifyButton_Click(sender As Object, e As EventArgs) Handles StartNORverifyButton.Click
 
-
         TeensyBlinkNOR.Visible = True
-        RunCommandCom("COMMANDS.EXE", TabControl1.SelectedTab.Text & TabCommandsNOR.SelectedTab.Text & " " & Chr(34) & VerifyWithTextBoxNOR.Text & Chr(34))
+        RunCommandCom("COMMANDS.EXE", TabControl1.SelectedTab.Text & TabCommandsNOR.SelectedTab.Text & " " & Chr(34) & VerifyWithTextBoxNOR.Text & Chr(34) & " NUL NUL " & CheckBoxPFWwriteNOR.Checked)
 
     End Sub
 
@@ -428,5 +428,44 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub TabNORwrite_Click(sender As Object, e As EventArgs) Handles TabNORwrite.Paint
+
+        If System.IO.File.Exists("NORway.py") Then
+            Dim RD As FileStream = New FileStream("NORway.py", FileMode.Open, FileAccess.Read, FileShare.Read, 8192)
+            Dim md5 As MD5CryptoServiceProvider = New MD5CryptoServiceProvider
+            md5.ComputeHash(RD)
+            RD.Close()
+            Dim hash As Byte() = md5.Hash
+            Dim SB As StringBuilder = New StringBuilder
+            Dim b As Byte
+            For Each b In hash
+                SB.Append(String.Format("{0:x2}", b))
+            Next
+            If SB.ToString() = "37cd558bc2c89b61f5ba9a04827366a9" Then
+                CheckBoxPFWwriteNOR.Enabled = True
+            End If
+        End If
+
+    End Sub
+
+    Private Sub TabNORverify_Click(sender As Object, e As EventArgs) Handles TabNORverify.Paint
+
+        If System.IO.File.Exists("NORway.py") Then
+            Dim RD As FileStream = New FileStream("NORway.py", FileMode.Open, FileAccess.Read, FileShare.Read, 8192)
+            Dim md5 As MD5CryptoServiceProvider = New MD5CryptoServiceProvider
+            md5.ComputeHash(RD)
+            RD.Close()
+            Dim hash As Byte() = md5.Hash
+            Dim SB As StringBuilder = New StringBuilder
+            Dim b As Byte
+            For Each b In hash
+                SB.Append(String.Format("{0:x2}", b))
+            Next
+            If SB.ToString() = "37cd558bc2c89b61f5ba9a04827366a9" Then
+                CheckBoxPFWverifyNOR.Enabled = True
+            End If
+        End If
+
+    End Sub
 End Class
 

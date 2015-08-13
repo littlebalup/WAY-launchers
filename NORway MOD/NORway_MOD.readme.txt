@@ -1,0 +1,35 @@
+NORway MOD by Littlebalup
+=========================
+
+------------------------------------------------------------------------
+ATTENTION : The use of this program is at your own risk!
+The author can not be held responsible for the consequences of its use.
+------------------------------------------------------------------------
+
+Forked from NORway.py (v0.7) by Judges and modified to write/verify only PerFirmware data
+without the need of an extra perfirmware template file. It will directly load the perfirmware
+data from your dump file (from offset 0x40000, length 0xE80000), then write/verify them to the NOR.
+
+Related thread about PerFirmware stuff :
+http://www.psx-place.com/forum/downgrading/trick-teensy-2-0-nor-flashing-norway-write-perfirmware-data-2476.html
+
+
+REQUIREMENTS, INSTALLATION & USAGE:
+
+  - Same requirements as the original NORway v0.7 by Judges : https://github.com/hjudges/NORway
+  - Extra PerFirmware write usage : add "perfw" argument to the end of your write/verify command line.
+  
+		Examples : 
+				NORway.py COM1 write d:\mydump.bin perfw
+				NORway.py COM1 vwriteword d:\mydump.bin perfw
+				NORway.py COM1 verify d:\mydump.bin perfw
+				
+    Run script without arguments to display the complete help screen.
+    
+
+-------------------------------------------------------------------------
+CHANGE LOG:
+
+ v0.7 MOD 0.1 : First MOD release
+ 
+-------------------------------------------------------------------------
