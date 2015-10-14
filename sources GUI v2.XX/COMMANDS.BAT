@@ -10,7 +10,7 @@ set "argument2=%5"			rem compare dumps / write perfw arg
 rem ChangeColor 14 0
 echo.
 echo *******************************************************************************
-echo                       WAY-launchers v2.04, by littlebalup
+echo                       WAY-launchers v2.05, by littlebalup
 echo *******************************************************************************
 echo.
 rem ChangeColor 10 0
@@ -28,19 +28,19 @@ set MYFILES="%cd%"
 
 if not exist %systemroot%\system32\wbem\wmic.exe goto erreurversion
 
-goto %command%
+if "%command%" == "NANDPS3BADBLOCKS" goto %command%
+if "%command%" == "TeensyLoad" goto %command%
 
-goto %end%
+set teensy_port=
+for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "PNPDeviceID LIKE '%%USB\\VID_16C0&PID_047A\\12345%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
+echo.
+if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
+echo.
+goto %command%
 
 rem ------------- NOR codes ---------------------------------------------------------
 
 :NORinfo
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
 echo Starting : NORway.py %teensy_port% info
@@ -55,12 +55,6 @@ rem ChangeColor 10 0
 goto end
 
 :NORdump
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set /a nbr_dump=%argument1%
 set "file_name=%cmdfile1%"
 rem suite juste pour affichage sans guillemets
@@ -160,12 +154,6 @@ goto end
 :NORwrite
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -188,12 +176,6 @@ goto end
 :NORvwrite
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -216,12 +198,6 @@ goto end
 :NORwriteword
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -244,12 +220,6 @@ goto end
 :NORvwriteword
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -272,12 +242,6 @@ goto end
 :NORwritewordubm
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -300,12 +264,6 @@ goto end
 :NORvwritewordubm
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -328,12 +286,6 @@ goto end
 :NORverify
 set perfw=
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -354,12 +306,6 @@ rem ChangeColor 10 0
 goto end
 
 :NORrelease
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
 echo Starting : NORway.py %teensy_port% release
@@ -374,12 +320,6 @@ rem ChangeColor 10 0
 goto end
 
 :NORerasechip
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\norway.py goto erreurnorwayfile
 echo Starting : NORway.py %teensy_port% erasechip
@@ -397,12 +337,6 @@ goto end
 rem ------------- NAND codes ---------------------------------------------------------
 
 :NANDinfo
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\nandway.py goto erreurnandwayfile
 echo Starting : NANDway.py %teensy_port% 0 info
@@ -417,12 +351,6 @@ rem ChangeColor 10 0
 goto end
 
 :NANDdump
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set /a nbr_dump=%argument1%
 set "file_name=%cmdfile1%"
 rem suite juste pour affichage sans guillemets
@@ -521,12 +449,6 @@ goto end
 
 :NANDwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -547,12 +469,6 @@ goto end
 
 :NANDvwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -573,12 +489,6 @@ goto end
 
 :NANDdiffwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -602,12 +512,6 @@ goto end
 
 :NANDvdiffwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -654,12 +558,6 @@ goto end
 rem ------------- SPI codes ---------------------------------------------------------
 
 :SPIinfo
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
 echo Starting : SPIway.py %teensy_port% info
@@ -674,12 +572,6 @@ rem ChangeColor 10 0
 goto end
 
 :SPIdump
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set /a nbr_dump=%argument1%
 set "file_name=%cmdfile1%"
 rem suite juste pour affichage sans guillemets
@@ -778,12 +670,6 @@ goto end
 
 :SPIwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -802,12 +688,6 @@ goto end
 
 :SPIvwrite
 set file_name=
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 set "file_name=%cmdfile1%"
 if not exist %file_name% goto erreurfichier
 if %file_name% EQU "" goto erreurfichier
@@ -825,12 +705,6 @@ rem ChangeColor 10 0
 goto end
 
 :SPIerasechip
-set teensy_port=
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Abstract Control Model%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-for /f "usebackq" %%B in (`wmic path Win32_SerialPort Where "Description LIKE '%%Teensy USB Serial%%'" 2^>nul Get DeviceID ^| FIND "COM"`) do set teensy_port=%%B
-echo.
-if "%teensy_port%" NEQ "" (echo Teensy found on port %teensy_port%) else (goto erreurteensy)
-echo.
 echo.
 if not exist %myfiles%\spiway.py goto erreurspiwayfile
 echo Starting : SPIway.py %teensy_port% erasechip

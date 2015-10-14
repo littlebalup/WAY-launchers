@@ -6,7 +6,7 @@ Public Class MainForm
     Private Sub MainForm_Closing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
 
         Dim p As Process()
-        p = Process.GetProcessesByName("CMD")
+        p = Process.GetProcessesByName("COMMANDS")
         For Each proces As Process In p
             proces.Kill()
         Next

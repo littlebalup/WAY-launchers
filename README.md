@@ -41,30 +41,34 @@ INSTALLATION INSTRUCTIONS:
 -------------------------------------------------------------------------
 CHANGE LOG:
 
+ v2.05: - Fixed COM port auto-detection error on Windows 10 due to USB Serial generic drivers. 
+		  Now detection is done by searching PID/VID/SERIAL of the device instead of the driver name.
+		  Result is the detection is more efficient, delay is slightly reduced and it is fully driver version independent.
+		- Fixed bug killing all cmd prompts at closure.
+
  v2.04: Added extra options to write/verify "Per Firmware" data only on NOR. Those Options require my 
 		modded NORway.py script to be enabled. See Installation Instructions for more details.
-		
+
  v2.03: Correction of a minor bug concerning errorlevel detection from python scripts.
-        
+ 
  v2.02: Added compatibility with the latest USB serial drivers from PRJC: 
         "Teensy USB Serial" driver now detected as well as the old one.
-        
+
  v2.01: Bug correction about Multi-dumps and binary checks. (Thanks to Joris 73 from LS)
- 
- v2.00: Removed embeded console due to problems with scripts output redirection.
+
+ v2.00: Removed embedded console due to problems with scripts output redirection.
         Now scripts launched in a separate regular console prompt window.
         "Save screen" and "Kill process" buttons removed as well. Instead, you can 
         copy from console to save screen and use Ctrl+C to kill process if needed.
-        
+
  v1.01: Added Teensy programming feature: can load .hex file by clicking on the teensy picture.
-        Dump file extention changed: was (*.x.bin), now is (*.bin) if only one dump and (*_x.bin) if multi-dumps.
+        Dump file extension changed: was (*.x.bin), now is (*.bin) if only one dump and (*_x.bin) if multi-dumps.
 
  v1.00: First release
  
 -------------------------------------------------------------------------
 
 Source code available at https://github.com/littlebalup/WAY-launchers	
-
 
 Thanks to "Judges" for all his work.
 Thanks to "Swizzy" for the original idea (ref to WAYgui project : https://github.com/Swizzy/WAYGui)
