@@ -42,7 +42,7 @@ INSTALLATION INSTRUCTIONS:
 CHANGE LOG:
 
  v2.05: - Fixed COM port auto-detection error on Windows 10 due to USB Serial generic drivers. 
-		  Now detection is done by searching PID/VID/SERIAL of the device instead of the driver name.
+		  Now detection is done by searching VID/PID/SERIAL of the device instead of the driver name.
 		  Result is the detection is more efficient, delay is slightly reduced and it is fully driver version independent.
 		- Fixed bug killing all cmd prompts at closure.
 
