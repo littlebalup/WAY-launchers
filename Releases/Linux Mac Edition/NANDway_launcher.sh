@@ -187,7 +187,7 @@ done
 commandes
 }
 
-select-file ()
+select_file ()
 {
 echo -e "\033[37m-------------------------------------------------------------------------------"
 echo "Available files in `pwd` :"
@@ -421,8 +421,8 @@ scrypt_start ()
 echo
 case $cmd_type in
 	"dump") dump_settings;;
-	*"write") select-file;;
-	"ps3bb" ) select-file;;
+	*"write") select_file;;
+	"ps3bb" ) select_file;;
 esac
 confirmation_cmd
 if [ "$cmd_type" == "dump" ]
